@@ -1,28 +1,23 @@
 const socket = io();
 
+
 document.addEventListener("DOMContentLoaded", function () {
-    
 
 
-   // let hoy = new Date()
-   // let fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear();
-   // let hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
-   // const fechaYHora = fecha + ' ' + hora;
-    //console.log(fechaYHora)
     const addMessage = () => {
-     
+
+      let dateNow = new Date();
       let message = {
         author: document.querySelector("#username").value,
         text: document.querySelector("#text").value,
-        
+        date: dateNow.toLocaleString("en-GB")
       };
-      
-
-      console.log(message)
      console.log('Mensaje enviado...');
       socket.emit("new-message", message);
       return false;
+      
     };
+
     document.querySelector('form').addEventListener("submit",function(e){
     e.preventDefault();
      addMessage();
@@ -34,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
           (e) => `
            <div class="chatText">
            <strong>${e.text}</strong>:
-           <em>${e.author}</em>
+           <em>${e.author} - ${e.date}</em> 
            </div>
           `
         )
